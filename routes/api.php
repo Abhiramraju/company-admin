@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\APIController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/companies', [APIController::class, 'companies']);
+Route::get('/employees', [APIController::class, 'employees']);
+Route::get('companies/{id}', [ApiController::class, 'showCompany']);
+Route::get('employees/{id}', [ApiController::class, 'showEmployee']);
