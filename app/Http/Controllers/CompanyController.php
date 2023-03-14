@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Models\Employee;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 class CompanyController extends Controller
@@ -23,8 +24,8 @@ class CompanyController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'email' => 'nullable|email',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'email' => 'nullable|email|unique:companies,email',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048|min:100x100',
             'website' => 'nullable|url',
         ]);
 
@@ -104,7 +105,10 @@ class CompanyController extends Controller
     
         // delete the company logo file from storage if it exists
         if ($company->logo) {
-            Storage::delete('logos/' . $company->logo);
+            $path = public_path('storage/logos/' . $company->logo);
+            if (file_exists($path)) {
+                unlink($path);
+            }
         }
     
         // delete the company record
@@ -112,6 +116,7 @@ class CompanyController extends Controller
     
         return redirect()->route('companies.index')->with('success', 'Company deleted successfully.');
     }
+    
     
 
 }

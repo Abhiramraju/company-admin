@@ -43,11 +43,11 @@ class EmployeeController extends Controller
         $validatedData = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'gender' => 'required|in:male,female,other',
+            'gender' => 'nullable|in:male,female,other',
             'mobile' => 'required|unique:employees,mobile',
             'email' => 'nullable|email|unique:employees,email',
             'company_id' => 'required|exists:companies,id',
-            'status' => 'required|in:0,1,2',
+            'status' => 'nullable|in:0,1,2',
         ]);
     
         // Create a new employee instance with the validated data
