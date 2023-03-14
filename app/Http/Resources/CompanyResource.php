@@ -22,9 +22,5 @@ class CompanyResource extends JsonResource
             'website' => $this->website,
         ];
     }
-    public function show($id)
-    {
-        $company = Company::findOrFail($id);
-        return new CompanyResource($company);
-    }
+
 }

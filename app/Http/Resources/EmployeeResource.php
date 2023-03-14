@@ -24,10 +24,6 @@ class EmployeeResource extends JsonResource
         ];
     }
 
-    public function show($id)
-{
-    $employee = Employee::findOrFail($id);
-    return new EmployeeResource($employee);
-}
+
 
 }
